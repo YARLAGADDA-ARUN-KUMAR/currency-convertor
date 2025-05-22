@@ -5,7 +5,7 @@ import { InputBox } from "./components/index";
 
 function App() {
 
-  const [amount, setAmount] = useState(0)
+  const [amount, setAmount] = useState("")
   const [from, setFrom] = useState('usd')
   const [to, setTo] = useState('inr')
   const [convertedAmount, setConvertedAmount] = useState(0)
@@ -14,8 +14,12 @@ function App() {
   const options = Object.keys(currencyInfo)
 
   const convert = () => {
-    setConvertedAmount(amount * currencyInfo[to])
+  if (!currencyInfo[to]) {
+    setConvertedAmount(0);
+    return;
   }
+  setConvertedAmount(Number(amount) * currencyInfo[to]);
+}
 
   const swap = () => {
     setFrom(to)
@@ -30,7 +34,7 @@ function App() {
         backgroundImage: `url(https://images.pexels.com/photos/210607/pexels-photo-210607.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2)`,
       }}>
       <div className='w-full'>
-        <div className='w-full max-w-md mx-auto border border-gray-60 rounded-lg p-5 backdrop-blur-sm bg-white/30'>
+        <div className='w-full max-w-md mx-auto border border-gray-600 rounded-lg p-5 backdrop-blur-sm bg-white/30'>
           <form onSubmit={(e) => {
             e.preventDefault()
             convert()
